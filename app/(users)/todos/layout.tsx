@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import TodoList from "./TodoList";
 
 export default function RootLayout({
@@ -7,11 +8,16 @@ export default function RootLayout({
 }) {
   return (
     <main className="flex">
-      <div>
-        {/* @ts-ignore */}
-        <TodoList />
-      </div>
-      <div className="flex-1">{children}</div>
+      <Suspense fallback={<p className="flex text-red">Get the data...</p>}>
+        <div>
+          {/* @ts-ignore */}
+          <TodoList />
+        </div>
+      </Suspense>
+
+      <Suspense fallback={<p className="flex text-blue">Get the data...</p>}>
+        <div className="flex-1">{children}</div>
+      </Suspense>
     </main>
   );
 }
